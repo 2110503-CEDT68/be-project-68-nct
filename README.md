@@ -41,17 +41,17 @@ project/
 │
 ├── models/
 │   ├── User.js
-│   ├── CampSite.js
+│   ├── Campground.js
 │   └── Booking.js
 │
 ├── controllers/
 │   ├── auth.js
-│   ├── campsites.js
+│   ├── campground.js
 │   └── bookings.js
 │
 ├── routes/
 │   ├── auth.js
-│   ├── campsites.js
+│   ├── campground.js
 │   └── bookings.js
 │
 ├── middleware/
