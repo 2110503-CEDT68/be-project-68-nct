@@ -6,14 +6,7 @@ const Booking = require("../models/Booking");
 exports.createBooking = async (req, res) => {
   try {
     
-    const userId = req.user.id;
-
-    const booking = await Booking.create({
-      user: userId,
-      campsite: req.body.campsite,
-      startDate: req.body.startDate,
-      endDate: req.body.endDate,
-    });
+    const booking = await Booking.create(req.body);
 
     res.status(201).json({ success: true, data: booking });
   } catch (err) {
