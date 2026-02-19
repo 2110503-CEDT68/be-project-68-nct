@@ -98,8 +98,8 @@ POST	/api/v1/auth/login	Login
 GET	/api/v1/auth/logout	Logout
 🏕️ Camp Sites
 Method	Endpoint	Description
-GET	/api/v1/campsites	Get all campsites
-GET	/api/v1/campsites/:id	Get single campsite
+GET	/api/v1/Campground	Get all campsites
+GET	/api/v1/Campground/:id	Get single campsite
 📅 Bookings (User)
 Method	Endpoint	Description
 POST	/api/v1/bookings	Create booking
