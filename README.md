@@ -32,14 +32,14 @@
 - **Backend:** Node.js, Express
 - **Database:** MongoDB Atlas
 - **ODM:** Mongoose
-- **Auth:** JWT (ถ้ามี)
+- **Auth:** JWT
 - **API Testing:** Postman
 
 ---
 
 ## 📁 Project Structure
 
-````txt
+```
 project/
 │
 ├── models/
@@ -65,16 +65,18 @@ project/
 │
 ├── server.js
 └── package.json
+```
 
 ---
 
 ## ⚙️ การติดตั้ง (Installation)
 
 ### 1. Clone โปรเจกต์
+
 ```bash
 git clone https://github.com/2110503-CEDT68/be-project-68-nct.git
 cd be-project-68-nct
-````
+```
 
 ### 2. ติดตั้ง Dependencies
 
