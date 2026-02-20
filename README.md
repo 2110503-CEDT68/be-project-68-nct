@@ -10,6 +10,7 @@
 ## 🚀 Features
 
 ### 👤 User
+
 - สมัครสมาชิก (Register)
 - เข้าสู่ระบบ / ออกจากระบบ (Login / Logout)
 - ดูรายการสถานที่กางเต็นท์
@@ -19,6 +20,7 @@
 - ลบการจองของตนเอง
 
 ### 🛠️ Admin
+
 - ดูการจองทั้งหมด
 - แก้ไขการจองใดก็ได้
 - ลบการจองใดก็ได้
@@ -26,6 +28,7 @@
 ---
 
 ## 🧱 Tech Stack
+
 - **Backend:** Node.js, Express
 - **Database:** MongoDB Atlas
 - **ODM:** Mongoose
@@ -36,7 +39,7 @@
 
 ## 📁 Project Structure
 
-```txt
+````txt
 project/
 │
 ├── models/
@@ -62,3 +65,47 @@ project/
 │
 ├── server.js
 └── package.json
+
+---
+
+## ⚙️ การติดตั้ง (Installation)
+
+### 1. Clone โปรเจกต์
+```bash
+git clone https://github.com/2110503-CEDT68/be-project-68-nct.git
+cd be-project-68-nct
+````
+
+### 2. ติดตั้ง Dependencies
+
+```bash
+npm install
+```
+
+### 3. สร้างไฟล์ config/config.env
+
+```env
+NODE_ENV=development
+PORT=5000
+MONGO_URI=mongodb+srv://<username>:<password>@<cluster>.mongodb.net/<dbname>?retryWrites=true&w=majority
+JWT_SECRET=mysecretkey
+JWT_EXPIRE=30d
+```
+
+### 4. รันโปรเจกต์
+
+```bash
+# Development mode
+npm run dev
+
+# Production mode
+npm start
+```
+
+### 5. ทดสอบ API
+
+เปิด Postman แล้วส่ง request ไปที่
+
+```
+http://localhost:5000/api/v1/
+```
