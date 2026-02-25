@@ -106,7 +106,7 @@ exports.createCampground = async (req, res, next) => {
 // @desc    Update campground
 // @route   PUT /api/v1/campgrounds/:id
 // @access  Private
-exports.updateCampgrounds = async (req, res, next) => {
+exports.updateCampground = async (req, res, next) => {
     try {
         const campground = await Campground.findByIdAndUpdate(req.params.id, req.body, {
             new: true,
