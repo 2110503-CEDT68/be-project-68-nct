@@ -16,7 +16,18 @@ const CampgroundSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please add a telephone number"],
     trim: true,
-  },
+  }
+}, {
+    toJSON: {virtuals: true},
+    toObject: {virtuals: true}
+});
+
+// Reverse populate with virtuals
+CampgroundSchema.virtual('bookings', {
+    ref: 'Booking',
+    localField: '_id',
+    foreignField: 'campground',
+    justOne: false
 });
 
 module.exports = mongoose.model("Campground", CampgroundSchema);

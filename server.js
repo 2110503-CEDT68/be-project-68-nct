@@ -41,7 +41,7 @@ app.use(xss());
 // Rate Limiting
 const Limiter = rateLimit({
     windowsMs: 10*60*1000, // 10 mins
-    max: 100
+    max: 300
 });
 app.use(Limiter);
 
@@ -49,9 +49,9 @@ app.use(Limiter);
 app.use(hpp());
 
 // Mount routes
-app.use('/api/v1/hospitals', hospitals);
+app.use('/api/v1/campgrounds', campgrounds);
 app.use('/api/v1/auth', auth);
-app.use('/api/v1/appointments', appointments);
+app.use('/api/v1/bookings', bookings);
 
 const PORT = process.env.PORT || 5000;
 const server = app.listen(PORT, console.log('Server running in ', process.env.NODE_ENV, ' mode on port ', PORT));

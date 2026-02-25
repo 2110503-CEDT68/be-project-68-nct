@@ -84,15 +84,17 @@ cd be-project-68-nct
 npm install
 ```
 
-### 3. สร้างไฟล์ config/config.env
+### 3. แก้ config/config.env.example เป็น config.env ของตัวเอง
 
 ```env
+PORT=5000 (5003 for macos)
 NODE_ENV=development
-PORT=5000
 MONGO_URI=mongodb+srv://<username>:<password>@<cluster>.mongodb.net/<dbname>?retryWrites=true&w=majority
-JWT_SECRET=mysecretkey
+
+JWT_SECRET=your_jwt_secret_here
 JWT_EXPIRE=30d
-JWT_COOKIE_EXPIRE = 30
+JWT_COOKIE_EXPIRE=30
+
 ```
 
 ### 4. รันโปรเจกต์
