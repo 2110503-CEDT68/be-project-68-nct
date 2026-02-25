@@ -49,12 +49,12 @@ project/
 │
 ├── controllers/
 │   ├── auth.js
-│   ├── campground.js
+│   ├── campgrounds.js
 │   └── bookings.js
 │
 ├── routes/
 │   ├── auth.js
-│   ├── campground.js
+│   ├── campgrounds.js
 │   └── bookings.js
 │
 ├── middleware/
@@ -92,6 +92,7 @@ PORT=5000
 MONGO_URI=mongodb+srv://<username>:<password>@<cluster>.mongodb.net/<dbname>?retryWrites=true&w=majority
 JWT_SECRET=mysecretkey
 JWT_EXPIRE=30d
+JWT_COOKIE_EXPIRE = 30
 ```
 
 ### 4. รันโปรเจกต์
@@ -108,6 +109,6 @@ npm start
 
 เปิด Postman แล้วส่ง request ไปที่
 
-```
+``` 
 http://localhost:5000/api/v1/
 ```
