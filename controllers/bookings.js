@@ -93,7 +93,7 @@ exports.addBooking = async (req, res) => {
 
     //check ควบคุมจำนวนครั้งการจอง (เว้นแอดมิน)
     const existing = await Booking.find({ user: req.user.id });
-    if (existing.length >= 2 && req.user.role != "admin") {
+    if (existing.length >= 3 && req.user.role != "admin") {
       return res.status(400).json({
         success: false,
         msg: "Can't add your booking, hit the limit",
