@@ -61,6 +61,13 @@ exports.register = async (req,res,next) => {
 exports.login = async (req,res,next) => {
 
     try{
+        // Check if user is already logged in via cookie
+        if (req.cookies.token) {
+            return res.status(400).json({
+                success: false,
+                msg: 'You are already logged in. Please logout first.'
+            });
+        }
 
         const {email,password} = req.body;
 
