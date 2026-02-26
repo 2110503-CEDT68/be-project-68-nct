@@ -126,3 +126,50 @@ exports.logout = async (req,res,next) => {
         data:{}
     });
 };
+
+//changepassword
+//req body มีแค่ currentpassword กับ newpassword
+//ex.
+// {
+//   "currentPassword": "xxx",
+//   "newPassword": "yyy"
+// }
+exports.changePassword = async (req, res, next) => {
+    try {
+        
+        const{ currentpassword , newpassword } = req.body
+
+        //isEnterbody?
+        if(!currentpassword || !newpassword){
+            return res.status(400).json({
+                success: false,
+                message: 'Please enter your currentpassword and newpassword '
+            });
+        }
+
+        //find user
+        const user = await User.findById(req.user.id).select('+password');
+
+        //checkmatchcurrentpassword
+        const isMatch = await user.matchPassword(currentpassword);
+        if(!isMatch){
+            return res.status(400).json({
+                success:false,
+                msg:'CurrentPassword incorrect'
+            });
+        }
+
+        //setnewpassword
+        user.password = newpassword;
+        await user.save();
+
+        res.status(200).json({
+            success:true,
+            message:'Password Changed'
+        });
+
+
+    } catch (err) {
+        res.status(400).json({success: false});
+    }
+};
