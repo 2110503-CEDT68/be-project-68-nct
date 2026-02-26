@@ -1,4 +1,5 @@
 const Booking = require("../models/Booking");
+const Campground = require("../models/Campground");
 
 // @desc    Get all bookings
 // @route   GET /api/v1/bookings
@@ -69,6 +70,35 @@ exports.addBooking = async (req, res) => {
   try {
     req.body.campground = req.params.campgroundId;
     req.body.user = req.user.id;
+
+    //check มี camp ไหม
+    const campground = await Campground.findById(req.params.campgroundId);
+    if (!campground) {
+      return res
+        .status(404)
+        .json({ success: false, msg: "Can't find Campground" });
+    }
+
+    //check จองยัง (แอดมินจองซ้ำได้)
+    const duplicate = await Booking.findOne({
+      user: req.user.id,
+      campground: req.params.campgroundId,
+    });
+    if (duplicate && req.user.role != "admin") {
+      return res.status(400).json({
+        success: false,
+        msg: "You have already booked this campground",
+      });
+    }
+
+    //check ควบคุมจำนวนครั้งการจอง (เว้นแอดมิน)
+    const existing = await Booking.find({ user: req.user.id });
+    if (existing.length >= 2 && req.user.role != "admin") {
+      return res.status(400).json({
+        success: false,
+        msg: "Can't add your booking, hit the limit",
+      });
+    }
 
     const booking = await Booking.create(req.body);
 
