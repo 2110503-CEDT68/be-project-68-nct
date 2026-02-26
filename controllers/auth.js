@@ -140,10 +140,10 @@ exports.changePassword = async (req, res, next) => {
         const{ currentPassword , newPassword } = req.body
 
         //isEnterbody?
-        if(!currentpassword || !newpassword){
+        if(!currentPassword || !newPassword){
             return res.status(400).json({
                 success: false,
-                message: 'Please enter your currentpassword and newpassword '
+                message: 'Please enter your Current Password and New Password '
             });
         }
 
@@ -151,16 +151,16 @@ exports.changePassword = async (req, res, next) => {
         const user = await User.findById(req.user.id).select('+password');
 
         //checkmatchcurrentpassword
-        const isMatch = await user.matchPassword(currentpassword);
+        const isMatch = await user.matchPassword(currentPassword);
         if(!isMatch){
             return res.status(400).json({
-                success:false,
-                msg:'CurrentPassword incorrect'
+                success: false,
+                msg: 'Current Password incorrect'
             });
         }
 
         //setnewpassword
-        user.password = newpassword;
+        user.password = newPassword;
         await user.save();
 
         return sendTokenResponse(user, 200, res);
