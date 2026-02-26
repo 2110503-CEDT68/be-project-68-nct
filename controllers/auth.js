@@ -137,7 +137,7 @@ exports.logout = async (req,res,next) => {
 exports.changePassword = async (req, res, next) => {
     try {
         
-        const{ currentpassword , newpassword } = req.body
+        const{ currentPassword , newPassword } = req.body
 
         //isEnterbody?
         if(!currentpassword || !newpassword){
@@ -163,13 +163,13 @@ exports.changePassword = async (req, res, next) => {
         user.password = newpassword;
         await user.save();
 
-        res.status(200).json({
-            success:true,
-            message:'Password Changed'
-        });
-
+        return sendTokenResponse(user, 200, res);
 
     } catch (err) {
-        res.status(400).json({success: false});
+        console.log(err.stack);
+        res.status(500).json({
+            success: false,
+            message: 'Cannot change password'
+        });
     }
 };
