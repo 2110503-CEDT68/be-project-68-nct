@@ -94,7 +94,7 @@ exports.login = async (req,res,next) => {
         if(!isMatch){
             return res.status(401).json({
                 success:false,
-                msg:'Invalid credantials'
+                msg:'Invalid credentials'
             });
         }
 
