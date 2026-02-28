@@ -1,0 +1,23 @@
+@startuml Campground Booking System
+left to right direction
+actor "User" as user
+rectangle "Campground Booking System" as campgroundSystem {
+    usecase "Register" as register
+    usecase "Login" as login 
+    usecase "View\nCampgrounds" as viewCamp
+    usecase "Manage\nCampgrounds" as manageCamp
+    usecase "Manage\nBookings" as manageBook 
+}
+actor "Admin" as admin 
+
+user -- register
+user -- login
+user -- viewCamp
+user -- manageBook
+
+register -- admin
+login -- admin
+manageCamp -- admin
+manageBook -- admin
+
+@enduml
