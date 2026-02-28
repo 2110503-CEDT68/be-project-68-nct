@@ -1,0 +1,34 @@
+@startuml
+left to right direction
+
+
+actor Admin
+
+rectangle "Use Case" {
+    (ChangePassword)
+    (View Any Campground)
+    (View Any Booking)
+    (Edit Any Booking)
+    (Auth)
+    (Register)
+    (Login)
+    (Logout)
+    (Delete Any Booking)
+    (Edit Any Campground)
+    (Delete Any Campground)
+}
+
+
+' Draw Admin interactions from right to force Admin to the right side
+ Admin -->(View Any Campground) 
+ Admin-->(View Any Booking) 
+ Admin--> (Edit Any Booking) 
+ Admin -->(Edit Any Campground) 
+ Auth <-- (Register)
+ Auth <-- (Login)
+ Auth <-- (Logout)
+ Auth <--(ChangePassword)
+ Admin  --> (Auth)    
+ Admin -->(Delete Any Booking) 
+ Admin -->(Delete Any Campground) 
+@enduml
