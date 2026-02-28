@@ -1,49 +1,90 @@
 @startuml Campground Booking System
-title Campground Booking System - Class Diagram
+title Campground Booking System - Class Diagram (UML Profile)
 
-class User {
-    -String name
-    -String tel
-    -String email
-    -String password
-    -String role
-    -Date createdAt
-    +register()
-    +login()
-    -getMe()
-    -logout()
+' --- Stereotypes Definition ---
+skinparam class {
+    BackgroundColor<<model>> LightBlue
+    BackgroundColor<<controller>> LightGreen
+    BackgroundColor<<middleware>> LightYellow
 }
 
-class Campground {
-    -String name
-    -String address
-    -String tel
-    +getCampgrounds()
-    +getCampground()
-    -createCampground()
-    -updateCampground()
-    -deleteCampground()
+' --- Classes ---
+
+package "Models" {
+    class User <<model>> {
+        -String name
+        -String tel
+        -String email
+        -String password
+        -String role
+        +getSignedJwtToken()
+        +matchPassword()
+    }
+
+    class Campground <<model>> {
+        -String name
+        -String address
+        -String tel
+        -- Virtual --
+        +bookings
+    }
+
+    class Booking <<model>> {
+        -Date bookingDate
+        -Number nights
+        -ObjectId user
+        -ObjectId campground
+    }
 }
 
-class Booking {
-    -Date bookingDate
-    -Number nights
-    -ObjectId user
-    -ObjectId campground
-    -getBookings()
-    -getBooking()
-    -addBooking()
-    -updateBooking()
-    -deleteBooking()
+package "Controllers" {
+    class AuthController <<controller>> {
+        +register()
+        +login()
+        +getMe()
+        +logout()
+        +changePassword()
+        +deleteUser()
+    }
+
+    class CampgroundController <<controller>> {
+        +getCampgrounds()
+        +getCampground()
+        +createCampground()
+        +updateCampground()
+        +deleteCampground()
+    }
+
+    class BookingController <<controller>> {
+        +getBookings()
+        +getBooking()
+        +addBooking()
+        +updateBooking()
+        +deleteBooking()
+    }
 }
 
-' Relationships
-User "1" -- "0..*" Booking : makes >
-Campground "1" -- "0..*" Booking : has >
+package "Middleware" {
+    class AuthMiddleware <<middleware>> {
+        +protect()
+        +authorize()
+    }
+}
 
-note bottom of Booking
-  **Constraints:**
-  - Max 3 nights
-end note
+' --- Relationships ---
+
+' Controllers use Models
+AuthController ..> User : uses
+CampgroundController ..> Campground : uses
+CampgroundController ..> Booking : deletes
+BookingController ..> Booking : uses
+BookingController ..> Campground : checks
+
+' Middleware interacts with Models
+AuthMiddleware ..> User : validates
+
+' Model Relationships
+User "1" -- "0..*" Booking : owns >
+Campground "1" -- "0..*" Booking : receives >
 
 @enduml
