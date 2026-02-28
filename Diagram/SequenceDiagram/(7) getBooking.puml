@@ -1,0 +1,39 @@
+@startuml Get Booking (GET SINGLE)
+
+header Campground Booking System Sequence Diagram
+footer Page %page% of %lastpage%
+title "Manage Booking (GET SINGLE)"
+
+participant "Client" as client
+participant "<<javaScript>>\n:server" as server
+participant "<<router>>\n:bookings" as routerBookings
+participant "<<middleware>>\n:auth" as middleware
+participant "<<controllers>>\n:bookings" as controllersBookings
+participant "<<model>>\n:Booking" as modelBooking
+database "<<MongoDB>>\n:bookings" as BookingsDatabase
+
+client->server ++:req.get('/api/v1/bookings/:id')
+server->routerBookings ++:app.use('/api/v1/bookings', bookings)
+
+routerBookings -> middleware ++:protect()
+routerBookings <- middleware --:next()
+
+routerBookings -> controllersBookings ++:getBooking()
+
+controllersBookings -> modelBooking ++:findById(req.params.id)
+modelBooking -> BookingsDatabase ++: BookingSchema
+BookingsDatabase --> modelBooking --: booking
+controllersBookings <-- modelBooking --: booking
+
+alt booking not found
+controllersBookings -> client : response (404, success: false, msg: 'No booking with id...')
+else booking found
+controllersBookings -> controllersBookings : check ownership (user id == booking.user OR role == admin)
+alt authorized
+controllersBookings -> client : response (200, success: true, data: booking)
+else not authorized
+controllersBookings -> client --: response (403, success: false, msg: 'Not authorized...')
+end
+end
+
+@enduml

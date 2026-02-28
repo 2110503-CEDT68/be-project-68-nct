@@ -1,0 +1,35 @@
+@startuml Get Bookings (GET ALL)
+
+header Campground Booking System Sequence Diagram
+footer Page %page% of %lastpage%
+title "Manage Bookings (GET ALL)"
+
+participant "Client" as client
+participant "<<javaScript>>\n:server" as server
+participant "<<router>>\n:bookings" as routerBookings
+participant "<<middleware>>\n:auth" as middleware
+participant "<<controllers>>\n:bookings" as controllersBookings
+participant "<<model>>\n:Booking" as modelBooking
+database "<<MongoDB>>\n:bookings" as BookingsDatabase
+
+client->server ++:req.get('/api/v1/bookings')
+server->routerBookings ++:app.use('/api/v1/bookings', bookings)
+
+routerBookings -> middleware ++:protect()
+routerBookings <- middleware --:next()
+
+routerBookings -> controllersBookings ++:getBookings()
+
+alt role == 'admin'
+controllersBookings -> modelBooking ++:find() / find({campgroundId})
+else role == 'user'
+controllersBookings -> modelBooking :find({user: req.user.id})
+end
+
+modelBooking -> BookingsDatabase ++: BookingSchema
+BookingsDatabase --> modelBooking --: bookings
+controllersBookings <-- modelBooking --: bookings
+
+controllersBookings->client --:response (200, success: true, data: bookings)
+
+@enduml
