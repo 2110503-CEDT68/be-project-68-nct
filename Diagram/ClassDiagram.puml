@@ -1,0 +1,49 @@
+@startuml Campground Booking System
+title Campground Booking System - Class Diagram
+
+class User {
+    -String name
+    -String tel
+    -String email
+    -String password
+    -String role
+    -Date createdAt
+    +register()
+    +login()
+    -getMe()
+    -logout()
+}
+
+class Campground {
+    -String name
+    -String address
+    -String tel
+    +getCampgrounds()
+    +getCampground()
+    -createCampground()
+    -updateCampground()
+    -deleteCampground()
+}
+
+class Booking {
+    -Date bookingDate
+    -Number nights
+    -ObjectId user
+    -ObjectId campground
+    -getBookings()
+    -getBooking()
+    -addBooking()
+    -updateBooking()
+    -deleteBooking()
+}
+
+' Relationships
+User "1" -- "0..*" Booking : makes >
+Campground "1" -- "0..*" Booking : has >
+
+note bottom of Booking
+  **Constraints:**
+  - Max 3 nights
+end note
+
+@enduml
