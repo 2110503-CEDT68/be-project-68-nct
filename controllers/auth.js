@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const Booking = require('../models/Booking');
 
 // Build and send JWT in cookie + body
 const sendTokenResponse = (user, statusCode, res) => {
@@ -180,3 +181,34 @@ exports.changePassword = async (req, res, next) => {
         });
     }
 };
+
+// @desc    Delete user and their bookings
+// @route   /api/v1/auth/delete
+// @access  Private
+exports.deleteUser = async (req, res, next) => {
+    try {
+        const user = await User.findById(req.params.id);
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                msg: `No user with id of ${req.params.id}`
+            });
+        }
+
+        await Booking.deleteMany({ user: req.params.id });
+
+        await user.deleteOne();
+
+        res.status(200).json({
+            success: true,
+            data: {}
+        });
+    } catch (err) {
+        console.log(err.stack);
+        res.status(400).json({
+            success: false,
+            msg: 'Cannot delete user'
+        });
+    }
+}
