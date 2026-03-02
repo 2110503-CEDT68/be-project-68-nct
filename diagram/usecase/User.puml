@@ -1,0 +1,32 @@
+@startuml
+left to right direction
+
+actor User
+
+rectangle "Use Case" {
+  (Register)
+  (Login)
+  (Create Booking)
+  (View Own Booking)
+  (Edit Own Booking)
+  (Auth)
+  (Delete Own Booking)
+  (Logout)
+  (ChangePassword)
+  (View any Campground)
+}
+
+' Keep User on the left side of the system boundary
+User --> (Auth)
+Auth <-- (Login)
+User --> (Create Booking)
+User --> (View Own Booking)
+User --> (Edit Own Booking)
+User --> (Delete Own Booking)
+Auth <-- (Register)
+Auth <-- (Logout)
+Auth <-- (ChangePassword)
+User --> (View any Campground)
+
+
+@enduml

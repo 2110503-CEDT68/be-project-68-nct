@@ -1,0 +1,20 @@
+@startuml
+actor User
+participant "Postman/Client" as Client
+participant "Booking Route" as Route
+participant "Booking Controller" as Controller
+participant "Booking Model" as Model
+database MongoDB
+
+User -> Client : Create Booking Request
+Client -> Route : POST /bookings
+Route -> Controller : createBooking()
+
+Controller -> Model : Booking.create()
+Model -> MongoDB : insert booking
+MongoDB --> Model : booking saved
+Model --> Controller : return booking
+
+Controller --> Client : 201 Created
+Client --> User : success response
+@enduml
